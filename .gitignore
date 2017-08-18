@@ -1,0 +1,27 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+target/
+
+# Compiled class files
+*.class
+
+# Log Files
+*.log
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+/mybatis-generator/src/main/java/cn/tyj/dao/mapper/
+/mybatis-generator/src/main/java/cn/tyj/dao/pojo/

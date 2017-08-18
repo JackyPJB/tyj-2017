@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <display-name>tyj</display-name>
+
+    <!--加载顺序与它们在 web.xml 文件中的先后顺序无关
+    真正的加载顺序为：context-param -> listener -> filter -> servlet-->
+
+    <!-- <context-param> 作用于整个web项目-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <!--<param-value>classpath*:conf/applicationContext.xml</param-value> classpath*: 后面接的路径可以为多层conf/xx/xx/xx.properties类似-->
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
+    <!--参考 ContextLoaderListener作用详解  http://blog.csdn.net/liangxw1/article/details/51037533 还有 ServletContextListener 介绍
+     ContextLoaderListener监听器的作用就是启动Web容器时，自动装配ApplicationContext的配置信息。可以自定义一个listener来监听在线人数
+     dyxx-mng 中还有一个通过listener预先定义properties的方式 SystemConstantsListener-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--            <param-value>/WEB-INF/classes/logback.xml</param-value>
+    /WEB-INF/classes 目录对应的就是 classpath：是build后的地方（classpath：build之前对应resources目录），可以在build后在 target 中查看-->
+    <context-param>
+        <param-name>logbackConfigLocation</param-name>
+        <param-value>classpath:logback.xml</param-value>
+    </context-param>
+    <!--参考 Spring MVC集成slf4j-logback ：http://blog.csdn.net/sadfishsc/article/details/47160213 ,加载上面logbackConfigLocation定义的logback.xml配置文件
+    https://logback.qos.ch/manual/introduction.html 官网-->
+    <listener>
+        <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+    </listener>
+
+    <!--该servlet名为mvc-dispatcher(名称可修改)，用于拦截请求（url-pattern为*.do），并交由Spring MVC的后台控制器来处理。这一项配置是必须,为了能够处理中文的post请求-->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:dispatcher-servlet.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <!--使用*.do可以避免静态文件无法访问的问题-->
+        <url-pattern>*.do</url-pattern>
+        <!--如果 <url-pattern> 配置为 "/" 那么静态文件的访问也会被dispatcher拦截，如jpg,js,css，这个时候就需要    <mvc:resources mapping="/js/**" location="/js/"/> 来表示这些事静态文件由 default servlet处理
+        如果要使用 <resources> 必须要<mvc:annotation-driven/> 如果没有<mvc:annotation-driven/>，<resources>元素会阻止任意控制器被调用-->
+        <!--<url-pattern>/</url-pattern>-->
+    </servlet-mapping>
+
+    <!--处理中文请求，添加encodingFilter，以避免post请求中文出现乱码情况，强制转换 Ecoding 为 UTF-8-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--定义一些欢迎错误等页面-->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/web/500.html</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/web/404.html</location>
+    </error-page>
+    <welcome-file-list>
+        <!--欢迎界面，他会按照顺序一个一个搜索，没有的话就搜下一个-->
+        <welcome-file>/web/index.html</welcome-file>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

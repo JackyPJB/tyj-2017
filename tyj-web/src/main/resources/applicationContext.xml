@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!-- Spring加载properties文件的两种方式  http://blog.csdn.net/eson_15/article/details/51365707-->
+    <!--<context:property-placeholder location=""/> 和下面的等价
+    但是下面的方式更加清晰，建议使用后面的这种。
+    这种方式只限于xml的方式，即在beans.xml中用${key}获取配置文件中的值value。
+    另外一种方式是通过@Value注解加载配置文件中的值的方式则可以在java中使用注解注入的值
+    <bean id="prop" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    <property name="locations"> 这里是PropertiesFactoryBean类，它也有个locations属性，也是接收一个数组，跟上面一样
+        <array><value> classpath:public.properties </value></array></property></bean>
+    java 中通过注解使用如下：
+    private String filePath;
+    @Value("#{prop.filePath}")
+    //@Value表示去beans.xml文件中找id="prop"的bean，它是通过注解的方式读取properties配置文件的，然后去相应的配置文件中读取key=filePath的对应的value值
+    另外  dyxx-mng 中还有一个通过listener预先定义properties的方式 SystemConstantsListener自定义加载properties方式 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--加载校验器到适配器中 -->
+    <mvc:annotation-driven validator="validator">
+    </mvc:annotation-driven>
+    <!--spring MVC 使用 hibernate validator验证框架,国际化配置 http://www.cnblogs.com/selfchange/p/6297984.html-->
+    <!--LocalValidatorFactoryBean ：messageSource通过set方法注入,然后转换为MessageInterpolator对象，如果不配置messageSource信息源，
+    那么会使用默认的信息源HibernateValidations_xx_xx.properties,位于org.hibernate.validator包下，具体使用哪个文件由Locale.getDefaultLocale()决定。-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
+        <!-- 这里配置将使用下面的国际化配置的messageSource -->
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+    <!-- 用户的区域是通过区域解析器来识别的，它必须实现LocaleResolver接口存储区域设置信息 默认是 AcceptHeaderLocaleResolver无法改变区域
+     参考 http://blog.csdn.net/rj042/article/details/23354225
+     SessionLocaleResolver。它通过检验用户会话中预置的属性来解析区域。如果该会话属性
+     不存在，它会根据accept-language HTTP头部确定默认区域。-->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+    <property name="defaultLocale" value="zh_CN" />
+    </bean>
+    <!--拦截器，修改local 通过配置LocaleChangeInterceptor，我们可以动态改变本地语言。它会检测请求中的参数 lang=XX 来改变地区信息。localeResolver.setLocale(XX)-->
+    <mvc:interceptors>
+        <bean id="localeChangeInterceptor"
+              class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang" />
+        </bean>
+    </mvc:interceptors>
+    <!--声明validationMessageSource bean，告诉Spring要去哪里找错误信息的属性文件（ValidationMessages.properties）
+        ReloadableResourceBundleMessageSource ：spring中提供的信息源配置类，支持properties和xml文件，更改配置无需重启服务，
+        basenames指定文件位置和名称(可使用classpath前缀)，fileEncodings指定各个文件的编码方式，spring中首先查找.properties后缀文件，找不到再查找.xml后缀文件。
+        一定要用 ValidationMessages ， 吃了一个大亏了，搞了我半天！ MMP ！-->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <!--国际化资源文件-->
+                <value>classpath:messages</value>
+                <!--吃过亏的配置！！ MMP　！！数据验证的properties文件一定要写成 ValidationMessages.properties 的形式，比如 ValidationMessages_zh_CN.properties-->
+                <value>classpath:ValidationMessages</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="cacheSeconds" value="60"/>
+    </bean>
+
+
+    <!-- maven pom  <dependency> 中加入了hs 和 biz 的依赖，所以能够访问他们的 resources root 目录 -->
+    <import resource="applicationService.xml"/>
+
+</beans>

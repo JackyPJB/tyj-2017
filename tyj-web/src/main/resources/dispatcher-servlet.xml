@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--扫描 Controller 控制器 beans,还需要扫描 Service 服务类beans(在applicationContext中扫描 作用于整个application)-->
+    <context:component-scan base-package="cn.tyj.web.controller"/>
+    <!--添加<mvc:annotation-driven/>确保Controller被解析，不加可能不解析 http://blog.csdn.net/jbgtwang/article/details/7359592
+        这个标签注册了Spring MVC分发请求到控制器所必须的DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter实例
+        <annotaion-driven/>标签主要是用来帮助我们处理请求映射，决定是哪个controller的哪个方法来处理当前请求，异常处理。
+        匹配到controller后 再加载配置的 数据转换器和校验器-->
+    <mvc:annotation-driven conversion-service="conversionService">
+    </mvc:annotation-driven>
+
+    <!-- 转换器 选择converter还是formatter 参考 https://segmentfault.com/a/1190000005708254-->
+    <!-- ConverterFactory接口 http://blog.csdn.net/renhui999/article/details/9837897-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!--<property name="converters">-->
+        <property name="formatters">
+            <!--suppress InjectionValueTypeInspection -->
+            <list>
+                <!--<bean class="cn.tyj.web.converter.CustomDateConverter" />-->
+                <bean class="cn.tyj.web.converter.CustomDateFormatter">
+                    <!--初始化构造函数-->
+                    <constructor-arg name="datePattern" value="yyyy-MM-dd HH:mm:ss"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 如果dispatcher的<url-pattern>为"/",就需要添加resources元素 处理静态资源 指示了哪些静态资源需要单独处理（不通过dispatcher servlet）,只有以下静态资源可以被访问
+        <mvc:resources mapping="/css/**" location="/css/"/>
+        <mvc:resources mapping="/images/**" location="/images/"/>
+        <mvc:resources mapping="/js/**" location="/js/"/>
+        <mvc:resources mapping="/*.ico" location="/images/"/>
+        <mvc:resources mapping="/web/**" location="/web/"/>
+        如果要使用 <resources> 必须要<mvc:annotation-driven/> 如果没有<mvc:annotation-driven/>，<resources>元素会阻止任意控制器被调用-->
+
+    <!--直接复制粘贴网上的<bean></bean>出错，可能是输入法问题吧-->
+    <!--配置视图解析器org.springframework.web.servlet.view.InternalResourceViewResolver 这个类，就是拼接视图路径用的，遇到一些redirect forward支持URL在客户端的跳转-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp"/>
+        <property name="suffix" value=".jsp"/>
+        <!--InternalResourceViewResolver 中的 viewClass 配置为JstlView,如果使用spring 标签库的话必须 声明为 JstlView,不然spring标签库可能不起作用，甚至引起错误。-->
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="exposeContextBeansAsAttributes" value="true"/>
+    </bean>
+
+    <!--使用文件上传需要依赖 apache 的 commons-fileupload 和 commons-io（加上io可以实现更快的io）-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为5MB -->
+        <property name="maxUploadSize" value="5242880" />
+        <property name="defaultEncoding" value="utf-8" />
+    </bean>
+</beans>
