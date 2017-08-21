@@ -12,6 +12,17 @@
     <artifactId>mybatis-generator</artifactId>
     <description>Mybatis-generator 在 IDEA 中通过 maven plugin 自动生成 mapper  pojo</description>
 
+    <dependencies>
+    <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+    </dependencies>
+
     <build>
         <finalName>xxx</finalName>
         <plugins>
