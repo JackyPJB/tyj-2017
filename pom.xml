@@ -68,6 +68,8 @@
         <commons-io.version>2.5</commons-io.version>
         <jstl.version>1.2</jstl.version>
         <hibernate-validator.version>6.0.1.Final</hibernate-validator.version>
+	    <alibaba-druid.version>1.0.31</alibaba-druid.version>
+
 
 
     </properties>
@@ -77,20 +79,14 @@
     生产环境（Producation）中数据库服务器的地址）。参考 http://www.cnblogs.com/EasonJim/p/6828743.html -->
     <profiles>
         <profile>
-            <id>daily</id>
+            <id>test</id>
             <properties>
-                <configPath>daily</configPath>
+                <configPath>test</configPath>
             </properties>
             <!--<activation>激活配置文件，几种激活配置文件的方式，参考 http://juvenshun.iteye.com/blog/208714 -->
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <configPath>test</configPath>
-            </properties>
         </profile>
         <profile>
             <id>product</id>
@@ -117,11 +113,11 @@
             </dependency>
 
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit-version}</version>
-                <scope>test</scope>
-            </dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
@@ -142,6 +138,16 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+	        <dependency>
+		        <groupId>org.springframework</groupId>
+		        <artifactId>spring-tx</artifactId>
+		        <version>${spring.version}</version>
+	        </dependency>
+	        <dependency>
+		        <groupId>org.springframework</groupId>
+		        <artifactId>spring-orm</artifactId>
+		        <version>${spring.version}</version>
+	        </dependency>
             <dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis</artifactId>
@@ -215,6 +221,11 @@
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
             </dependency>
+	        <dependency>
+		        <groupId>com.alibaba</groupId>
+		        <artifactId>druid</artifactId>
+		        <version>${alibaba-druid.version}</version>
+	        </dependency>
         </dependencies>
     </dependencyManagement>
 

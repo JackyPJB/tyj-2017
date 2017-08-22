@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 开启自动扫描，在指定的路劲及子路径下扫描，将扫描到的的bean 注册到spring的bean中-->
+	<context:component-scan base-package="cn.tyj.dao.data"/>
+	<mvc:annotation-driven/>
+
+	<!--DRUID连接池的实用 配置详解：http://www.cnblogs.com/wuyun-blog/p/5679073.html-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+	      destroy-method="close">
+		<!--这一项可配可不配，如果不配置druid会根据url自动识别dbType，然后选择相应的driverClassName(建议配置下)-->
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<!--连接数据库的密码。如果你不希望密码直接写在配置文件中，可以使用ConfigFilter。-->
+		<property name="password" value="${jdbc.password}" />
+
+		<!-- 配置连接池初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时-->
+		<property name="initialSize" value="${initialSize}" />
+		<!--连接池的最大数据库连接数。设为0表示无限制。一般把maxActive设置成可能的并发量就行了-->
+		<property name="maxActive" value="${maxActive}" />
+		<!--连接池中存在的最小连接数目。连接池中连接数目可以变很少，如果使用了maxAge属性，有些空闲的连接会被关闭因为离它最近一次连接的时间过去太久了。但是，我们看到的打开的连接不会少于minIdle。-->
+		<property name="minIdle" value="${minIdle}" />
+		<!-- 配置获取连接等待超时的时间 如果超过此时间将接到异常。设为-1表示无限制。 -->
+		<property name="maxWait" value="${maxWait}" />
+		<!--是否打开自动回收超时连接功能-->
+		<property name="removeAbandoned" value="${removeAbandoned}" />
+		<!--设置被遗弃的连接的超时的时间（以秒数为单位），即当一个连接被遗弃的时间超过设置的时间，则它会自动转换成可利用的连接。默认的超时时间是300秒。-->
+		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+		<!--用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。-->
+		<property name="validationQuery" value="${validationQuery}" />
+		<!--建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。-->
+		<property name="testWhileIdle" value="${testWhileIdle}" />
+		<!--申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。-->
+		<property name="testOnBorrow" value="${testOnBorrow}" />
+		<!--归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能-->
+		<property name="testOnReturn" value="${testOnReturn}" />
+		<!-- 是否缓存preparedStatement，也就是PSCache,默认是false。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在 mysql并且JAVA7 以下 下建议关闭。 -->
+		<property name="poolPreparedStatements" value="${poolPreparedStatements}" />
+		<!--启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100-->
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="${maxPoolPreparedStatementPerConnectionSize}" />
+		<!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall-->
+		<property name="filters" value="${filters}" />
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<!--配置mapper.xml文件位置-->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:mappers/*.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--扫描mapper接口，和<context:component-scan base-package="cn.tyj.dao.data"/>配合使用 http://www.cnblogs.com/daxin/p/3545040.html-->
+	<bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="basePackage" value="cn.tyj.dao.mapper" />
+		<!--<property name="annotationClass" value="" />-->
+		<!--<property name="markerInterface" value="" />-->
+	</bean>
+
+</beans>

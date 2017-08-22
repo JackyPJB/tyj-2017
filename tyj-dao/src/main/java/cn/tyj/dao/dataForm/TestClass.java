@@ -1,8 +1,11 @@
-package cn.tyj.dao.xml;
+package cn.tyj.dao.dataForm;
 
 
+
+import cn.tyj.dao.vo.User001Vo;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -10,9 +13,10 @@ import java.util.Date;
  * User : Pengjb
  * Date : 2017/8/16
  */
-public class TestClass {
+public class TestClass extends User001Vo{
 
 	@NotBlank(message="{user.name.required}")
+	@Size(max = 8,min = 3,message = "{user.name.size}")
 	private String name;
 
 	private Date date;

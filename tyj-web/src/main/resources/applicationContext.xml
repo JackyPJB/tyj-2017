@@ -24,6 +24,7 @@
         <property name="locations">
             <list>
                 <value>classpath:config.properties</value>
+	            <value>classpath:jdbc.properties</value>
             </list>
         </property>
     </bean>
@@ -74,5 +75,6 @@
 
     <!-- maven pom  <dependency> 中加入了hs 和 biz 的依赖，所以能够访问他们的 resources root 目录 -->
     <import resource="applicationService.xml"/>
+    <import resource="spring-Mybatis.xml"/>
 
 </beans>

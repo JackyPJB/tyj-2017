@@ -1,5 +1,7 @@
 package cn.tyj.service;
 
+import cn.tyj.dao.vo.User001Vo;
+
 /**
  * Created with IntelliJ IDEA
  * User : Pengjb
@@ -7,7 +9,8 @@ package cn.tyj.service;
  */
 public interface TestService {
 
-	//关于我们
 	int count();
+
+	int insert(User001Vo user001Vo);
 
 }

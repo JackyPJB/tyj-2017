@@ -25,3 +25,4 @@ target/
 *.rar
 /mybatis-generator/src/main/java/cn/tyj/dao/mapper/
 /mybatis-generator/src/main/java/cn/tyj/dao/pojo/
+/mybatis-generator/src/main/java/cn/tyj/dao/mapperxml/

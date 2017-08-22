@@ -1,6 +1,6 @@
 package cn.tyj.web.controller;
 
-import cn.tyj.dao.xml.TestClass;
+import cn.tyj.dao.dataForm.TestClass;
 import cn.tyj.service.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +53,7 @@ public class Test {
 		}
 		logger.info("aaaaaaaaa= " + testClass.getDate());
 //		model.addAttribute(testClass);
+		model.addAttribute("insertResult",testService.insert(testClass));
 		model.addAttribute("test111",testService.count());
         model.addAttribute("dizhi","http://www.njm2m.com");//二维码映射的地址
 		return "/test/pjbtest";

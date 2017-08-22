@@ -13,8 +13,9 @@
 </head>
 <body>
 <h3>Hello WosfsdfsdfdsfdsfPPPPPPPPPPPPPPPPPPPPrld!</h3>
-<h2>${test111}</h2>
-<h1>${dizhi}</h1>
+<h2>test111 : ${test111}</h2>
+<h2>inserResult : ${insertResult}</h2>
+<h1>dizhi : ${dizhi}</h1>
 <h1>Date of Birth testClass.date: ${testClass.date}</h1>
 <form:form commandName="testClass" action="/test/pjbtest.do" method="post">
     <fieldset>
