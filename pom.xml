@@ -117,32 +117,39 @@
             <artifactId>junit</artifactId>
             <version>${junit-version}</version>
             <scope>test</scope>
-        </dependency>
-            <dependency>
+            </dependency>
+	        <!--spring-core包含commons-logging和spring-core-->
+<!--            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
                 <version>${spring.version}</version>
-            </dependency>
-            <dependency>
+            </dependency>-->
+	        <!--spring-web包含spring-web、spring-aop、spring-beans、spring-context、spring-expression、spring-core
+	        所以用了spring-web就可以不要spring-core-->
+<!--            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
-            </dependency>
+            </dependency>-->
+	        <!--同样，spring-webmvc包含了spring-web和spring-core所有的内容外加spring-webmvc，用了spring-webmvc就不用spring-core和spring-web了-->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+	        <!--spring-test包含spring-core和spring-test-->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-	        <dependency>
+	        <!--spring-tx包含spring-core、spring-beans、spring-tx-->
+<!--	        <dependency>
 		        <groupId>org.springframework</groupId>
 		        <artifactId>spring-tx</artifactId>
 		        <version>${spring.version}</version>
-	        </dependency>
+	        </dependency>-->
+	        <!--spring-orm包含了spring-jdbc、spring-tx-->
 	        <dependency>
 		        <groupId>org.springframework</groupId>
 		        <artifactId>spring-orm</artifactId>
