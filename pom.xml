@@ -59,6 +59,8 @@
         <mybatis.version>3.4.4</mybatis.version>
         <mybatis-spring.version>1.3.1</mybatis-spring.version>
         <mysql-connector-java.version>5.1.43</mysql-connector-java.version>
+	    <aspectjweaver.version>1.8.10</aspectjweaver.version>
+	    <cglib.version>3.2.5</cglib.version>
         <javax-servlet.version>3.1.0</javax-servlet.version>
         <logback.version>1.2.3</logback.version>
         <logback-spring.version>0.1.4</logback-spring.version>
@@ -170,7 +172,19 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
             </dependency>
-            <dependency>
+	        <!--事物管理需要的包-->
+	        <dependency>
+		        <groupId>org.aspectj</groupId>
+		        <artifactId>aspectjweaver</artifactId>
+		        <version>${aspectjweaver.version}</version>
+	        </dependency>
+	        <!--动态代理，在事务管理中，proxy-target-class="true"会用到，高级spring会自动选择true还是false，所以还是加入这个包吧-->
+	        <dependency>
+		        <groupId>cglib</groupId>
+		        <artifactId>cglib</artifactId>
+		        <version>${cglib.version}</version>
+	        </dependency>
+	        <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax-servlet.version}</version>

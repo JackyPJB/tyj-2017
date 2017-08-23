@@ -1,7 +1,7 @@
-package cn.tyj.web.controller;
+package cn.tyj.web.controller.test;
 
 import cn.tyj.dao.dataForm.TestClass;
-import cn.tyj.service.TestService;
+import cn.tyj.service.test.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -37,7 +37,7 @@ public class Test {
 //	public ModelAndView pjbTest(ModelAndView model) {
 // 		model.addObject("test","123345");
 //		model.setViewName("/test/pjbtest");
-	public String pjbTest(@Valid TestClass testClass, BindingResult bindingResult, Model model) {
+	public String pjbTest(@Valid TestClass testClass, BindingResult bindingResult, Model model){
 //        Long userId = sessionManager.getUserId(session);
 //        QuizCustomVo quizCustomVo = new QuizCustomVo();
 //        quizCustomVo.setUserId(userId);
@@ -53,7 +53,7 @@ public class Test {
 		}
 		logger.info("aaaaaaaaa= " + testClass.getDate());
 //		model.addAttribute(testClass);
-		model.addAttribute("insertResult",testService.insert(testClass));
+		model.addAttribute("insertResult",testService.insert1(testClass));
 		model.addAttribute("test111",testService.count());
         model.addAttribute("dizhi","http://www.njm2m.com");//二维码映射的地址
 		return "/test/pjbtest";

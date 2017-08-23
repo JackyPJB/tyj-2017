@@ -1,9 +1,10 @@
-package cn.tyj.service.impl;
+package cn.tyj.service.test.impl;
 
 import cn.tyj.dao.data.User001Data;
 import cn.tyj.dao.vo.User001Vo;
-import cn.tyj.service.TestService;
+import cn.tyj.service.test.TestService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -12,6 +13,7 @@ import javax.annotation.Resource;
  * User : Pengjb
  * Date : 2017/8/16
  */
+
 
 @Service("testService")
 public class TestServiceImpl implements TestService {
@@ -24,8 +26,14 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	public int insert(User001Vo user001Vo){
-		return user001Data.insert(user001Vo);
+	public int insert1(User001Vo user001Vo){
+
+				user001Data.insert(user001Vo);
+				int a = 1/0;
+				user001Vo.setName("aaaaaaaaaaaa");
+				user001Data.insert(user001Vo);
+
+			return 1;
 	}
 
 

@@ -74,7 +74,7 @@
 
 
     <!-- maven pom  <dependency> 中加入了hs 和 biz 的依赖，所以能够访问他们的 resources root 目录 -->
-    <import resource="applicationService.xml"/>
-    <import resource="spring-Mybatis.xml"/>
+	<import resource="spring-Mybatis.xml"/>
+	<import resource="applicationService.xml"/>
 
 </beans>

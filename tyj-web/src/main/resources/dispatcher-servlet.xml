@@ -12,6 +12,7 @@
 
     <!--扫描 Controller 控制器 beans,还需要扫描 Service 服务类beans(在applicationContext中扫描 作用于整个application)-->
     <context:component-scan base-package="cn.tyj.web.controller"/>
+
     <!--添加<mvc:annotation-driven/>确保Controller被解析，不加可能不解析 http://blog.csdn.net/jbgtwang/article/details/7359592
         这个标签注册了Spring MVC分发请求到控制器所必须的DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter实例
         <annotaion-driven/>标签主要是用来帮助我们处理请求映射，决定是哪个controller的哪个方法来处理当前请求，异常处理。

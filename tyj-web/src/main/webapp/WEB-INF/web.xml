@@ -51,6 +51,17 @@
         <!--<url-pattern>/</url-pattern>-->
     </servlet-mapping>
 
+    <!-- druid 监控数据库
+    通过访问 http://localhost:8080/tyj-web/druid/sql.html 来查看数据库监控情况-->
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid/*</url-pattern>
+    </servlet-mapping>
+
     <!--处理中文请求，添加encodingFilter，以避免post请求中文出现乱码情况，强制转换 Ecoding 为 UTF-8-->
     <filter>
         <filter-name>encodingFilter</filter-name>
