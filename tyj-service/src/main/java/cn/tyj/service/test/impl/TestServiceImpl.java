@@ -28,13 +28,7 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public int insert1(User001Vo user001Vo){
 
-				user001Data.insert(user001Vo);
-				int a = 1/0;
-				user001Vo.setName("aaaaaaaaaaaa");
-				user001Data.insert(user001Vo);
-
-			return 1;
+		return user001Data.insert(user001Vo);
 	}
-
 
 }

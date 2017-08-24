@@ -15,10 +15,29 @@
 
     <!--添加<mvc:annotation-driven/>确保Controller被解析，不加可能不解析 http://blog.csdn.net/jbgtwang/article/details/7359592
         这个标签注册了Spring MVC分发请求到控制器所必须的DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter实例
-        <annotaion-driven/>标签主要是用来帮助我们处理请求映射，决定是哪个controller的哪个方法来处理当前请求，异常处理。
-        匹配到controller后 再加载配置的 数据转换器和校验器-->
-    <mvc:annotation-driven conversion-service="conversionService">
+        这两个bean是spring MVC为@Controllers分发请求所必须的,决定是哪个controller的哪个方法来处理当前请求，异常处理。匹配到controller后 再加载配置的 数据转换器和校验器
+        并提供了数据绑定支持，@NumberFormatannotation支持，@DateTimeFormat支持，@Valid支持，读写XML的支持（JAXB），读写JSON的支持（Jackson）。-->
+    <mvc:annotation-driven conversion-service="conversionService" >
+		<mvc:message-converters register-defaults="true">
+			<!--添加 Json 支持-->
+			<!--<ref bean="mappingJacksonHttpMessageConverter" />
+			我这里吃了一个老亏~~~~！！！！！！！屮屮屮屮 Invalid mime type "application/json, application/json": Invalid token chara 415 错误，
+			原因竟然是因为我用的 FireFox 火狐 HttpRequester 测试 Content type 为 application/json 类型时报错
+			解决方案：Content type 中的 application/json 后面加一个分号 ; 就OK了！屮了狗了！！
+			参考 ：http://blog.csdn.net/cpych/article/details/77514651
+			还有一些其他的原因参考 ：http://blog.csdn.net/yixiaoping/article/details/45281721#comments -->
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+<!--				<property name="supportedMediaTypes">
+				<list>
+					<value>application/json;charset=UTF-8</value>
+					<value>application/x-www-form-urlencoded</value>
+					<value>text/html</value>
+				</list>
+				</property>-->
+			</bean>
+		</mvc:message-converters>
     </mvc:annotation-driven>
+
 
     <!-- 转换器 选择converter还是formatter 参考 https://segmentfault.com/a/1190000005708254-->
     <!-- ConverterFactory接口 http://blog.csdn.net/renhui999/article/details/9837897-->
@@ -30,11 +49,12 @@
                 <!--<bean class="cn.tyj.web.converter.CustomDateConverter" />-->
                 <bean class="cn.tyj.web.converter.CustomDateFormatter">
                     <!--初始化构造函数-->
-                    <constructor-arg name="datePattern" value="yyyy-MM-dd HH:mm:ss"/>
+                    <!--<constructor-arg name="datePattern" value="yyyy-MM-dd HH:mm:ss"/>-->
                 </bean>
             </list>
         </property>
     </bean>
+
 
     <!-- 如果dispatcher的<url-pattern>为"/",就需要添加resources元素 处理静态资源 指示了哪些静态资源需要单独处理（不通过dispatcher servlet）,只有以下静态资源可以被访问
         <mvc:resources mapping="/css/**" location="/css/"/>
@@ -44,6 +64,10 @@
         <mvc:resources mapping="/web/**" location="/web/"/>
         如果要使用 <resources> 必须要<mvc:annotation-driven/> 如果没有<mvc:annotation-driven/>，<resources>元素会阻止任意控制器被调用-->
 
+	<!-- 视图解析器，参考 http://elim.iteye.com/blog/1770554  缓存型 AbstractCachingViewResolver  拼接URL的方式来解析视图型 UrlBasedViewResolver-->
+	<!--<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">-->
+		<!--<property name="order" value="1" />-->
+	<!--</bean>-->
     <!--直接复制粘贴网上的<bean></bean>出错，可能是输入法问题吧-->
     <!--配置视图解析器org.springframework.web.servlet.view.InternalResourceViewResolver 这个类，就是拼接视图路径用的，遇到一些redirect forward支持URL在客户端的跳转-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -54,7 +78,8 @@
         <property name="exposeContextBeansAsAttributes" value="true"/>
     </bean>
 
-    <!--使用文件上传需要依赖 apache 的 commons-fileupload 和 commons-io（加上io可以实现更快的io）-->
+
+	<!--使用文件上传需要依赖 apache 的 commons-fileupload 和 commons-io（加上io可以实现更快的io）-->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 设置上传文件的最大尺寸为5MB -->

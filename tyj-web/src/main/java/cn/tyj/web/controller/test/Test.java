@@ -1,6 +1,8 @@
 package cn.tyj.web.controller.test;
 
 import cn.tyj.dao.dataForm.TestClass;
+import cn.tyj.dao.pojo.User001;
+import cn.tyj.dao.vo.User001Vo;
 import cn.tyj.service.test.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -38,14 +44,15 @@ public class Test {
 // 		model.addObject("test","123345");
 //		model.setViewName("/test/pjbtest");
 	public String pjbTest(@Valid TestClass testClass, BindingResult bindingResult, Model model){
-//        Long userId = sessionManager.getUserId(session);
-//        QuizCustomVo quizCustomVo = new QuizCustomVo();
-//        quizCustomVo.setUserId(userId);
-//        List<QuizCustom> myMessage = quizService.findQuizInfoItems(quizCustomVo).getModule();
-//        List<TestUserCustom> userList = userSerivce.findUserList();
-//        model.addAttribute("userList", userList);
-//        model.addAttribute("myMessage", myMessage);
-//		logger.info("testClass:" + testClass.getDate());
+/*        Long userId = sessionManager.getUserId(session);
+        QuizCustomVo quizCustomVo = new QuizCustomVo();
+        quizCustomVo.setUserId(userId);
+        List<QuizCustom> myMessage = quizService.findQuizInfoItems(quizCustomVo).getModule();
+        List<TestUserCustom> userList = userSerivce.findUserList();
+        model.addAttribute("userList", userList);
+        model.addAttribute("myMessage", myMessage);
+		logger.info("testClass:" + testClass.getDate());
+*/
 		if (bindingResult.hasErrors()) {
 			FieldError fieldError = bindingResult.getFieldError();
 			logger.info("Code:" + fieldError.getCode() + ", field:" + fieldError.getField() + " , message:" + fieldError.getDefaultMessage());
@@ -66,5 +73,22 @@ public class Test {
 		Locale locale = LocaleContextHolder.getLocale();
 		logger.info("local local local " + locale);
 		return modelAndView;
+	}
+
+//  Json 测试
+	@RequestMapping("/test/getJson")
+	public @ResponseBody
+	User001Vo getJson(@RequestBody User001Vo user001Vo){
+		user001Vo.setName("Json");
+		logger.info("userAge1111:"+user001Vo.getAge());
+		List<User001> user001List = new ArrayList<User001>();
+		for(int i=0;i<5;i++){
+			User001 user001 = new User001();
+			user001.setId(i);
+			user001List.add(user001);
+		}
+		user001List.addAll(user001Vo.getUser001List());
+		user001Vo.setUser001List(user001List);
+		return user001Vo;
 	}
 }

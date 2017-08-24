@@ -71,6 +71,7 @@
         <jstl.version>1.2</jstl.version>
         <hibernate-validator.version>6.0.1.Final</hibernate-validator.version>
 	    <alibaba-druid.version>1.0.31</alibaba-druid.version>
+        <jackson.version>2.8.9</jackson.version>
 
 
 
@@ -246,6 +247,12 @@
 		        <groupId>com.alibaba</groupId>
 		        <artifactId>druid</artifactId>
 		        <version>${alibaba-druid.version}</version>
+	        </dependency>
+	        <!--添加 jackson 对 json 的支持 jackson-databind 包含了 jackson-core和jackson-annotation 就不用添加他们了-->
+	        <dependency>
+		        <groupId>com.fasterxml.jackson.core</groupId>
+		        <artifactId>jackson-databind</artifactId>
+		        <version>${jackson.version}</version>
 	        </dependency>
         </dependencies>
     </dependencyManagement>
