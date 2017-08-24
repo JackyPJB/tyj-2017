@@ -27,8 +27,9 @@ public class TestServiceImpl implements TestService {
 
 	@Override
 	public int insert1(User001Vo user001Vo){
-
-		return user001Data.insert(user001Vo);
+		int a = user001Data.insert(user001Vo);
+//		int a=1/0; //用来检查事务管理有没有成功回滚，故意出错
+		return a;
 	}
 
 }
