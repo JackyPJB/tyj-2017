@@ -4,6 +4,12 @@ import cn.tyj.dao.dataForm.TestClass;
 import cn.tyj.dao.pojo.User001;
 import cn.tyj.dao.vo.User001Vo;
 import cn.tyj.service.test.TestService;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -90,5 +96,26 @@ public class Test {
 		user001List.addAll(user001Vo.getUser001List());
 		user001Vo.setUser001List(user001List);
 		return user001Vo;
+	}
+
+	//	微信测试
+	@RequestMapping("/test/wx")
+	public @ResponseBody
+	String wx(User001Vo user001Vo) throws WxErrorException{
+		WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
+		config.setAppId("wxea9a59d20ee4479b"); // 设置微信公众号的appid
+		config.setSecret("543714d1001fc6a480758c7dbba44818"); // 设置微信公众号的app corpSecret
+		config.setToken("5a3281bb34efed3cee98b3200b66ef51"); // 设置微信公众号的token
+		config.setAesKey("Blwwlyl3umfAQfpnV75LT2LyD2mQVsx1RpHzhfUXGOc"); // 设置微信公众号的EncodingAESKey
+
+		WxMpService wxService = new WxMpServiceImpl();
+		wxService.setWxMpConfigStorage(config);
+		WxMpKefuMessage message = WxMpKefuMessage
+				.TEXT()
+				.toUser("oI3ZYwesOLFi3ulFTJlo5hecpEOI")
+				.content(user001Vo.getId().toString())
+				.build();
+		wxService.getKefuService().sendKefuMessage(message);
+		return "ok";
 	}
 }

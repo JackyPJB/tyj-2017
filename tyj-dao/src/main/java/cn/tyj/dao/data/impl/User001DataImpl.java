@@ -21,6 +21,5 @@ public class User001DataImpl implements User001Data {
 	@Override
 	public int insert(User001 record){
 		return user001Mapper.insert(record);
-
 	}
 }

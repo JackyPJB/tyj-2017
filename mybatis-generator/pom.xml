@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mybatis-generator</artifactId>
-    <description>Mybatis-generator 在 IDEA 中通过 maven plugin 自动生成 mapper  pojo</description>
+    <description>Mybatis-generator 在 IDEA 中通过 maven plugin 自动生成 mapper  pojo,使用方法请百度</description>
 
     <dependencies>
     <dependency>

@@ -56,13 +56,13 @@
     </bean>
 
 
-    <!-- 如果dispatcher的<url-pattern>为"/",就需要添加resources元素 处理静态资源 指示了哪些静态资源需要单独处理（不通过dispatcher servlet）,只有以下静态资源可以被访问
+     <!--如果dispatcher的<url-pattern>为"/",就需要添加resources元素 处理静态资源 指示了哪些静态资源需要单独处理（不通过dispatcher servlet）,只有以下静态资源可以被访问-->
         <mvc:resources mapping="/css/**" location="/css/"/>
         <mvc:resources mapping="/images/**" location="/images/"/>
         <mvc:resources mapping="/js/**" location="/js/"/>
-        <mvc:resources mapping="/*.ico" location="/images/"/>
+        <!--<mvc:resources mapping="/*.ico" location="/images/"/>-->
         <mvc:resources mapping="/web/**" location="/web/"/>
-        如果要使用 <resources> 必须要<mvc:annotation-driven/> 如果没有<mvc:annotation-driven/>，<resources>元素会阻止任意控制器被调用-->
+        <!--如果要使用 <resources> 必须要<mvc:annotation-driven/> 如果没有<mvc:annotation-driven/>，<resources>元素会阻止任意控制器被调用-->
 
 	<!-- 视图解析器，参考 http://elim.iteye.com/blog/1770554  缓存型 AbstractCachingViewResolver  拼接URL的方式来解析视图型 UrlBasedViewResolver-->
 	<!--<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">-->

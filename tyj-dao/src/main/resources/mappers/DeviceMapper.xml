@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tyj.dao.mapper.DeviceMapper">
+  <resultMap id="BaseResultMap" type="cn.tyj.dao.pojo.Device">
+    <id column="device_id" jdbcType="BIGINT" property="deviceId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="identity_card_id" jdbcType="VARCHAR" property="identityCardId" />
+    <result column="driving_code" jdbcType="VARCHAR" property="drivingCode" />
+    <result column="driving_Authority_name" jdbcType="VARCHAR" property="drivingAuthorityName" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="tellphone" jdbcType="VARCHAR" property="tellphone" />
+    <result column="province_id" jdbcType="INTEGER" property="provinceId" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="maker_id" jdbcType="VARCHAR" property="makerId" />
+    <result column="device_model" jdbcType="VARCHAR" property="deviceModel" />
+    <result column="cat_color" jdbcType="INTEGER" property="catColor" />
+    <result column="car_id" jdbcType="VARCHAR" property="carId" />
+    <result column="vin_id" jdbcType="VARCHAR" property="vinId" />
+    <result column="sim_id" jdbcType="VARCHAR" property="simId" />
+    <result column="cache_time" jdbcType="INTEGER" property="cacheTime" />
+    <result column="upload_time" jdbcType="INTEGER" property="uploadTime" />
+    <result column="warnning_upload_time" jdbcType="INTEGER" property="warnningUploadTime" />
+    <result column="domain_length" jdbcType="INTEGER" property="domainLength" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="server_port" jdbcType="INTEGER" property="serverPort" />
+    <result column="device_version" jdbcType="VARCHAR" property="deviceVersion" />
+    <result column="device_software_version" jdbcType="VARCHAR" property="deviceSoftwareVersion" />
+    <result column="heartbeat_time" jdbcType="INTEGER" property="heartbeatTime" />
+    <result column="device_overtime" jdbcType="INTEGER" property="deviceOvertime" />
+    <result column="server_overtime" jdbcType="INTEGER" property="serverOvertime" />
+    <result column="login_interval_time" jdbcType="INTEGER" property="loginIntervalTime" />
+    <result column="gov_domain_length" jdbcType="VARCHAR" property="govDomainLength" />
+    <result column="gov_domain" jdbcType="VARCHAR" property="govDomain" />
+    <result column="gov_server_port" jdbcType="INTEGER" property="govServerPort" />
+    <result column="sampling_inspection" jdbcType="SMALLINT" property="samplingInspection" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    device_id, user_name, identity_card_id, driving_code, driving_Authority_name, sex, 
+    tellphone, province_id, city_id, maker_id, device_model, cat_color, car_id, vin_id, 
+    sim_id, cache_time, upload_time, warnning_upload_time, domain_length, domain, server_port, 
+    device_version, device_software_version, heartbeat_time, device_overtime, server_overtime, 
+    login_interval_time, gov_domain_length, gov_domain, gov_server_port, sampling_inspection
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from device
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.tyj.dao.pojo.Device">
+    insert into device (device_id, user_name, identity_card_id, 
+      driving_code, driving_Authority_name, sex, 
+      tellphone, province_id, city_id, 
+      maker_id, device_model, cat_color, 
+      car_id, vin_id, sim_id, 
+      cache_time, upload_time, warnning_upload_time, 
+      domain_length, domain, server_port, 
+      device_version, device_software_version, heartbeat_time, 
+      device_overtime, server_overtime, login_interval_time, 
+      gov_domain_length, gov_domain, gov_server_port, 
+      sampling_inspection)
+    values (#{deviceId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{identityCardId,jdbcType=VARCHAR}, 
+      #{drivingCode,jdbcType=VARCHAR}, #{drivingAuthorityName,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
+      #{tellphone,jdbcType=VARCHAR}, #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, 
+      #{makerId,jdbcType=VARCHAR}, #{deviceModel,jdbcType=VARCHAR}, #{catColor,jdbcType=INTEGER}, 
+      #{carId,jdbcType=VARCHAR}, #{vinId,jdbcType=VARCHAR}, #{simId,jdbcType=VARCHAR}, 
+      #{cacheTime,jdbcType=INTEGER}, #{uploadTime,jdbcType=INTEGER}, #{warnningUploadTime,jdbcType=INTEGER}, 
+      #{domainLength,jdbcType=INTEGER}, #{domain,jdbcType=VARCHAR}, #{serverPort,jdbcType=INTEGER}, 
+      #{deviceVersion,jdbcType=VARCHAR}, #{deviceSoftwareVersion,jdbcType=VARCHAR}, #{heartbeatTime,jdbcType=INTEGER}, 
+      #{deviceOvertime,jdbcType=INTEGER}, #{serverOvertime,jdbcType=INTEGER}, #{loginIntervalTime,jdbcType=INTEGER}, 
+      #{govDomainLength,jdbcType=VARCHAR}, #{govDomain,jdbcType=VARCHAR}, #{govServerPort,jdbcType=INTEGER}, 
+      #{samplingInspection,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.tyj.dao.pojo.Device">
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="identityCardId != null">
+        identity_card_id,
+      </if>
+      <if test="drivingCode != null">
+        driving_code,
+      </if>
+      <if test="drivingAuthorityName != null">
+        driving_Authority_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="tellphone != null">
+        tellphone,
+      </if>
+      <if test="provinceId != null">
+        province_id,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="makerId != null">
+        maker_id,
+      </if>
+      <if test="deviceModel != null">
+        device_model,
+      </if>
+      <if test="catColor != null">
+        cat_color,
+      </if>
+      <if test="carId != null">
+        car_id,
+      </if>
+      <if test="vinId != null">
+        vin_id,
+      </if>
+      <if test="simId != null">
+        sim_id,
+      </if>
+      <if test="cacheTime != null">
+        cache_time,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+      <if test="warnningUploadTime != null">
+        warnning_upload_time,
+      </if>
+      <if test="domainLength != null">
+        domain_length,
+      </if>
+      <if test="domain != null">
+        domain,
+      </if>
+      <if test="serverPort != null">
+        server_port,
+      </if>
+      <if test="deviceVersion != null">
+        device_version,
+      </if>
+      <if test="deviceSoftwareVersion != null">
+        device_software_version,
+      </if>
+      <if test="heartbeatTime != null">
+        heartbeat_time,
+      </if>
+      <if test="deviceOvertime != null">
+        device_overtime,
+      </if>
+      <if test="serverOvertime != null">
+        server_overtime,
+      </if>
+      <if test="loginIntervalTime != null">
+        login_interval_time,
+      </if>
+      <if test="govDomainLength != null">
+        gov_domain_length,
+      </if>
+      <if test="govDomain != null">
+        gov_domain,
+      </if>
+      <if test="govServerPort != null">
+        gov_server_port,
+      </if>
+      <if test="samplingInspection != null">
+        sampling_inspection,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCardId != null">
+        #{identityCardId,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingCode != null">
+        #{drivingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingAuthorityName != null">
+        #{drivingAuthorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="tellphone != null">
+        #{tellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null">
+        #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="makerId != null">
+        #{makerId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="catColor != null">
+        #{catColor,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null">
+        #{carId,jdbcType=VARCHAR},
+      </if>
+      <if test="vinId != null">
+        #{vinId,jdbcType=VARCHAR},
+      </if>
+      <if test="simId != null">
+        #{simId,jdbcType=VARCHAR},
+      </if>
+      <if test="cacheTime != null">
+        #{cacheTime,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=INTEGER},
+      </if>
+      <if test="warnningUploadTime != null">
+        #{warnningUploadTime,jdbcType=INTEGER},
+      </if>
+      <if test="domainLength != null">
+        #{domainLength,jdbcType=INTEGER},
+      </if>
+      <if test="domain != null">
+        #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null">
+        #{serverPort,jdbcType=INTEGER},
+      </if>
+      <if test="deviceVersion != null">
+        #{deviceVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSoftwareVersion != null">
+        #{deviceSoftwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeatTime != null">
+        #{heartbeatTime,jdbcType=INTEGER},
+      </if>
+      <if test="deviceOvertime != null">
+        #{deviceOvertime,jdbcType=INTEGER},
+      </if>
+      <if test="serverOvertime != null">
+        #{serverOvertime,jdbcType=INTEGER},
+      </if>
+      <if test="loginIntervalTime != null">
+        #{loginIntervalTime,jdbcType=INTEGER},
+      </if>
+      <if test="govDomainLength != null">
+        #{govDomainLength,jdbcType=VARCHAR},
+      </if>
+      <if test="govDomain != null">
+        #{govDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="govServerPort != null">
+        #{govServerPort,jdbcType=INTEGER},
+      </if>
+      <if test="samplingInspection != null">
+        #{samplingInspection,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.tyj.dao.pojo.Device">
+    update device
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCardId != null">
+        identity_card_id = #{identityCardId,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingCode != null">
+        driving_code = #{drivingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingAuthorityName != null">
+        driving_Authority_name = #{drivingAuthorityName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="tellphone != null">
+        tellphone = #{tellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null">
+        province_id = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="makerId != null">
+        maker_id = #{makerId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        device_model = #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="catColor != null">
+        cat_color = #{catColor,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null">
+        car_id = #{carId,jdbcType=VARCHAR},
+      </if>
+      <if test="vinId != null">
+        vin_id = #{vinId,jdbcType=VARCHAR},
+      </if>
+      <if test="simId != null">
+        sim_id = #{simId,jdbcType=VARCHAR},
+      </if>
+      <if test="cacheTime != null">
+        cache_time = #{cacheTime,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=INTEGER},
+      </if>
+      <if test="warnningUploadTime != null">
+        warnning_upload_time = #{warnningUploadTime,jdbcType=INTEGER},
+      </if>
+      <if test="domainLength != null">
+        domain_length = #{domainLength,jdbcType=INTEGER},
+      </if>
+      <if test="domain != null">
+        domain = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null">
+        server_port = #{serverPort,jdbcType=INTEGER},
+      </if>
+      <if test="deviceVersion != null">
+        device_version = #{deviceVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSoftwareVersion != null">
+        device_software_version = #{deviceSoftwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="heartbeatTime != null">
+        heartbeat_time = #{heartbeatTime,jdbcType=INTEGER},
+      </if>
+      <if test="deviceOvertime != null">
+        device_overtime = #{deviceOvertime,jdbcType=INTEGER},
+      </if>
+      <if test="serverOvertime != null">
+        server_overtime = #{serverOvertime,jdbcType=INTEGER},
+      </if>
+      <if test="loginIntervalTime != null">
+        login_interval_time = #{loginIntervalTime,jdbcType=INTEGER},
+      </if>
+      <if test="govDomainLength != null">
+        gov_domain_length = #{govDomainLength,jdbcType=VARCHAR},
+      </if>
+      <if test="govDomain != null">
+        gov_domain = #{govDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="govServerPort != null">
+        gov_server_port = #{govServerPort,jdbcType=INTEGER},
+      </if>
+      <if test="samplingInspection != null">
+        sampling_inspection = #{samplingInspection,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.tyj.dao.pojo.Device">
+    update device
+    set user_name = #{userName,jdbcType=VARCHAR},
+      identity_card_id = #{identityCardId,jdbcType=VARCHAR},
+      driving_code = #{drivingCode,jdbcType=VARCHAR},
+      driving_Authority_name = #{drivingAuthorityName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      tellphone = #{tellphone,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=INTEGER},
+      maker_id = #{makerId,jdbcType=VARCHAR},
+      device_model = #{deviceModel,jdbcType=VARCHAR},
+      cat_color = #{catColor,jdbcType=INTEGER},
+      car_id = #{carId,jdbcType=VARCHAR},
+      vin_id = #{vinId,jdbcType=VARCHAR},
+      sim_id = #{simId,jdbcType=VARCHAR},
+      cache_time = #{cacheTime,jdbcType=INTEGER},
+      upload_time = #{uploadTime,jdbcType=INTEGER},
+      warnning_upload_time = #{warnningUploadTime,jdbcType=INTEGER},
+      domain_length = #{domainLength,jdbcType=INTEGER},
+      domain = #{domain,jdbcType=VARCHAR},
+      server_port = #{serverPort,jdbcType=INTEGER},
+      device_version = #{deviceVersion,jdbcType=VARCHAR},
+      device_software_version = #{deviceSoftwareVersion,jdbcType=VARCHAR},
+      heartbeat_time = #{heartbeatTime,jdbcType=INTEGER},
+      device_overtime = #{deviceOvertime,jdbcType=INTEGER},
+      server_overtime = #{serverOvertime,jdbcType=INTEGER},
+      login_interval_time = #{loginIntervalTime,jdbcType=INTEGER},
+      gov_domain_length = #{govDomainLength,jdbcType=VARCHAR},
+      gov_domain = #{govDomain,jdbcType=VARCHAR},
+      gov_server_port = #{govServerPort,jdbcType=INTEGER},
+      sampling_inspection = #{samplingInspection,jdbcType=SMALLINT}
+    where device_id = #{deviceId,jdbcType=BIGINT}
+  </update>
+</mapper>

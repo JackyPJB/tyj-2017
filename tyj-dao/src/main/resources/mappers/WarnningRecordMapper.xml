@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tyj.dao.mapper.WarnningRecordMapper">
+  <resultMap id="BaseResultMap" type="cn.tyj.dao.pojo.WarnningRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
+    <result column="record_id" jdbcType="INTEGER" property="recordId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="latitude_s_n" jdbcType="INTEGER" property="latitudeSN" />
+    <result column="longitude_w_e" jdbcType="INTEGER" property="longitudeWE" />
+    <result column="latitude" jdbcType="REAL" property="latitude" />
+    <result column="longitude" jdbcType="REAL" property="longitude" />
+    <result column="speed" jdbcType="REAL" property="speed" />
+    <result column="warnning_type_id" jdbcType="INTEGER" property="warnningTypeId" />
+    <result column="warnning_type" jdbcType="VARCHAR" property="warnningType" />
+    <result column="warnning_value" jdbcType="REAL" property="warnningValue" />
+    <result column="warnning_UNITS" jdbcType="VARCHAR" property="warnningUnits" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, record_time, record_id, user_id, latitude_s_n, longitude_w_e, latitude, longitude, 
+    speed, warnning_type_id, warnning_type, warnning_value, warnning_UNITS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from warnning_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from warnning_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.tyj.dao.pojo.WarnningRecord">
+    insert into warnning_record (id, record_time, record_id, 
+      user_id, latitude_s_n, longitude_w_e, 
+      latitude, longitude, speed, 
+      warnning_type_id, warnning_type, warnning_value, 
+      warnning_UNITS)
+    values (#{id,jdbcType=BIGINT}, #{recordTime,jdbcType=TIMESTAMP}, #{recordId,jdbcType=INTEGER}, 
+      #{userId,jdbcType=VARCHAR}, #{latitudeSN,jdbcType=INTEGER}, #{longitudeWE,jdbcType=INTEGER}, 
+      #{latitude,jdbcType=REAL}, #{longitude,jdbcType=REAL}, #{speed,jdbcType=REAL}, 
+      #{warnningTypeId,jdbcType=INTEGER}, #{warnningType,jdbcType=VARCHAR}, #{warnningValue,jdbcType=REAL}, 
+      #{warnningUnits,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.tyj.dao.pojo.WarnningRecord">
+    insert into warnning_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="recordTime != null">
+        record_time,
+      </if>
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="latitudeSN != null">
+        latitude_s_n,
+      </if>
+      <if test="longitudeWE != null">
+        longitude_w_e,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="speed != null">
+        speed,
+      </if>
+      <if test="warnningTypeId != null">
+        warnning_type_id,
+      </if>
+      <if test="warnningType != null">
+        warnning_type,
+      </if>
+      <if test="warnningValue != null">
+        warnning_value,
+      </if>
+      <if test="warnningUnits != null">
+        warnning_UNITS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="recordTime != null">
+        #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordId != null">
+        #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="latitudeSN != null">
+        #{latitudeSN,jdbcType=INTEGER},
+      </if>
+      <if test="longitudeWE != null">
+        #{longitudeWE,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=REAL},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=REAL},
+      </if>
+      <if test="speed != null">
+        #{speed,jdbcType=REAL},
+      </if>
+      <if test="warnningTypeId != null">
+        #{warnningTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="warnningType != null">
+        #{warnningType,jdbcType=VARCHAR},
+      </if>
+      <if test="warnningValue != null">
+        #{warnningValue,jdbcType=REAL},
+      </if>
+      <if test="warnningUnits != null">
+        #{warnningUnits,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.tyj.dao.pojo.WarnningRecord">
+    update warnning_record
+    <set>
+      <if test="recordTime != null">
+        record_time = #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordId != null">
+        record_id = #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="latitudeSN != null">
+        latitude_s_n = #{latitudeSN,jdbcType=INTEGER},
+      </if>
+      <if test="longitudeWE != null">
+        longitude_w_e = #{longitudeWE,jdbcType=INTEGER},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=REAL},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=REAL},
+      </if>
+      <if test="speed != null">
+        speed = #{speed,jdbcType=REAL},
+      </if>
+      <if test="warnningTypeId != null">
+        warnning_type_id = #{warnningTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="warnningType != null">
+        warnning_type = #{warnningType,jdbcType=VARCHAR},
+      </if>
+      <if test="warnningValue != null">
+        warnning_value = #{warnningValue,jdbcType=REAL},
+      </if>
+      <if test="warnningUnits != null">
+        warnning_UNITS = #{warnningUnits,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.tyj.dao.pojo.WarnningRecord">
+    update warnning_record
+    set record_time = #{recordTime,jdbcType=TIMESTAMP},
+      record_id = #{recordId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      latitude_s_n = #{latitudeSN,jdbcType=INTEGER},
+      longitude_w_e = #{longitudeWE,jdbcType=INTEGER},
+      latitude = #{latitude,jdbcType=REAL},
+      longitude = #{longitude,jdbcType=REAL},
+      speed = #{speed,jdbcType=REAL},
+      warnning_type_id = #{warnningTypeId,jdbcType=INTEGER},
+      warnning_type = #{warnningType,jdbcType=VARCHAR},
+      warnning_value = #{warnningValue,jdbcType=REAL},
+      warnning_UNITS = #{warnningUnits,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

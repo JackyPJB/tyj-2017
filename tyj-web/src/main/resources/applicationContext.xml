@@ -28,7 +28,18 @@
             </list>
         </property>
     </bean>
-
+    <!-- 这种加载方式可以在代码中通过@Value注解进行注入,
+	 可以将配置整体赋给Properties类型的类变量，也可以取出其中的一项赋值给String类型的类变量 -->
+    <!-- <util:properties/> 标签只能加载一个文件，当多个属性文件需要被加载的时候，可以使用多个该标签 -->
+    <!--<util:properties id="wxProperties" location="classpath:/wx.properties" />-->
+    <bean id="wxProperties"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:wx.properties</value>
+            </list>
+        </property>
+    </bean>
     <!--加载校验器到适配器中 -->
     <mvc:annotation-driven validator="validator">
     </mvc:annotation-driven>

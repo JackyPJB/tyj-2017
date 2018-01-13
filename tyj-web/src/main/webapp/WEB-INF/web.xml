@@ -20,7 +20,9 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
     <!--            <param-value>/WEB-INF/classes/logback.xml</param-value>
     /WEB-INF/classes 目录对应的就是 classpath：是build后的地方（classpath：build之前对应resources目录），可以在build后在 target 中查看-->
     <context-param>
@@ -45,10 +47,10 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <!--使用*.do可以避免静态文件无法访问的问题-->
-        <url-pattern>*.do</url-pattern>
+        <!--<url-pattern>*.do</url-pattern>-->
         <!--如果 <url-pattern> 配置为 "/" 那么静态文件的访问也会被dispatcher拦截，如jpg,js,css，这个时候就需要    <mvc:resources mapping="/js/**" location="/js/"/> 来表示这些事静态文件由 default servlet处理
         如果要使用 <resources> 必须要<mvc:annotation-driven/> 如果没有<mvc:annotation-driven/>，<resources>元素会阻止任意控制器被调用-->
-        <!--<url-pattern>/</url-pattern>-->
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!-- druid 监控数据库
